@@ -5,13 +5,49 @@ mongoose.connect('mongodb://localhost/playground', { useNewUrlParser: true, useU
   .catch(err => console.error('Could not connect to MongoDB... ', err));
 
 const courseSchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 255,
+    //match: /patten/
+  },
+  category: {
+    type: String,
+    required: true,
+    enum: ['web', 'mobile', 'network'],
+    lowercase: true,
+    //uppercase: true
+    trim: true
+  },
   author: String,
-  tags: [String],
+  tags: {
+    type: Array,
+    validate: {
+      isAsync: true,
+      validator: function (v, callback) {
+        setTimeout(() => {
+          //Do some Async work
+          const result = v && v.length > 0;
+          callback(result);
+        }, 4000);
+      },
+      message: 'A course should have at least one tag'
+    }
+  },
   date: {
-    type: Date, default: Date.now
+    type: Date,
+    default: Date.now
   },
   isPublished: Boolean,
+  price: {
+    type: Number,
+    required: function () { return this.isPublished; },
+    min: 10,
+    max: 200,
+    get: v => Math.round(v),
+    set: v => Math.round(v),
+  }
 });
 
 //Class
@@ -22,18 +58,33 @@ async function createCourse() {
   // Object 
   const course = new Course({
     name: 'Angular Course',
+    category: 'WEB',
     author: 'Zack',
-    tags: ['Angular', 'Frontend'],
+    //tags: [],
+    //tags: null,
+    tags: ['frontEnd'],
     isPublished: true,
+    price: 15.8
   });
 
-  const result = await course.save();
-
-  console.log(result);
+  try {
+    //await course.validate();
+    const result = await course.save();
+    console.log(result);
+  }
+  catch (ex) {
+    //console.log(ex.message);
+    for (field in ex.errors)
+      console.log(ex.errors[field].message);
+  }
 }
 
-// Paginaion
 
+//createCourse();
+
+
+
+// Paginaion
 const pageNumber = 2;
 const pageSize = 10;
 //    /api/Courses?pageNumber=2&pageSize=10
@@ -57,14 +108,14 @@ async function getCourses() {
 
     //Contains ck
     // i  is for case insensitive
-    .find({ author: /.*ck.*/i })
-    .skip((pageNumber - 1) * pageSize)
-    .limit(pageSize)
+    //    .find({ author: /.*ck.*/i })
+    // .skip((pageNumber - 1) * pageSize)
+    // .limit(pageSize)
+    .find({ _id: '5ff96daf9de2a13834c3726b' })
     .sort({ name: 1 })
-    .select({ name: 1, tags: 1 })
-    .count();
-  console.log(courses);
+    .select({ name: 1, tags: 1, price: 1 })
+  //.count();
+  console.log(courses[0].price);
 
 }
-
 getCourses();
