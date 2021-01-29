@@ -1,14 +1,12 @@
-const config = require('config');
+//const config = require('config');
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User } = require('../models/user');
-const mongoose = require('mongoose');
 const express = require('express');
-const router = express.Router();
-const jwt = require('jsonwebtoken');
+//const jwt = require('jsonwebtoken');
 
-router.post('/', async (req, res) => {
+const auth_create_post = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -22,7 +20,7 @@ router.post('/', async (req, res) => {
   const token = user.generateAuthToken();
 
   res.send(token);
-});
+};
 
 function validate(req) {
   const schema = {
@@ -33,6 +31,7 @@ function validate(req) {
   return Joi.validate(req, schema);
 }
 
-module.exports = router;
 
-
+module.exports = {
+  auth_create_post
+};
