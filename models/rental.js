@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
-const Rental = mongoose.model('Rental', new mongoose.Schema({
+const rentalSchema = new mongoose.Schema({
   customer: {
     type: new mongoose.Schema({
       name: {
@@ -23,7 +23,7 @@ const Rental = mongoose.model('Rental', new mongoose.Schema({
     }),
     required: true
   },
-  movie: {
+  car: {
     type: new mongoose.Schema({
       title: {
         type: String,
@@ -53,14 +53,28 @@ const Rental = mongoose.model('Rental', new mongoose.Schema({
     type: Number,
     min: 0
   }
-}));
+});
+
+rentalSchema.statics.lookup = function (customerId, carId) {
+  return this.findOne({
+    'customer._id': customerId,
+    'car._id': carId,
+  });
+}
+
+rentalSchema.methods.return = function () {
+  this.dateReturned = new Date();
+
+  const rentalDays = moment().diff(this.dateOut, 'days');
+  this.rentalFee = rentalDays * this.car.dailyRentalRate;
+}
+
+const Rental = mongoose.model('Rental', rentalSchema);
 
 function validateRental(rental) {
   const schema = {
-    // customerId: Joi.string().required(),
-    // movieId: Joi.string().required()
     customerId: Joi.objectId().required(),
-    movieId: Joi.objectId().required()
+    carId: Joi.objectId().required()
   };
 
   return Joi.validate(rental, schema);

@@ -1,15 +1,12 @@
 const { Car, validate } = require('../models/car');
 const { Type } = require('../models/type');
-const mongoose = require('mongoose');
-const express = require('express');
-const router = express.Router();
 
-router.get('/', async (req, res) => {
+const car_index = async (req, res) => {
   const cars = await Car.find().sort('name');
   res.send(cars);
-});
+};
 
-router.post('/', async (req, res) => {
+const car_create_post = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -28,9 +25,9 @@ router.post('/', async (req, res) => {
   await car.save();
 
   res.send(car);
-});
+};
 
-router.put('/:id', async (req, res) => {
+const car_update_put = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -51,22 +48,28 @@ router.put('/:id', async (req, res) => {
   if (!car) return res.status(404).send('The Car with the given ID was not found.');
 
   res.send(car);
-});
+};
 
-router.delete('/:id', async (req, res) => {
+const car_delete = async (req, res) => {
   const car = await Car.findByIdAndRemove(req.params.id);
 
   if (!car) return res.status(404).send('The Car with the given ID was not found.');
 
   res.send(car);
-});
+};
 
-router.get('/:id', async (req, res) => {
+const car_get = async (req, res) => {
   const car = await Car.findById(req.params.id);
 
   if (!car) return res.status(404).send('The Car with the given ID was not found.');
 
   res.send(car);
-});
+};
 
-module.exports = router; 
+module.exports = {
+  car_index,
+  car_create_post,
+  car_update_put,
+  car_delete,
+  car_get
+};
