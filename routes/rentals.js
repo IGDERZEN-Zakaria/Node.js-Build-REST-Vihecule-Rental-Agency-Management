@@ -1,5 +1,5 @@
 const { Rental, validate } = require('../models/rental');
-const { Movie } = require('../models/movie');
+const { Car } = require('../models/car');
 const { Customer } = require('../models/customer');
 const mongoose = require('mongoose');
 const Fawn = require('fawn');
@@ -23,10 +23,10 @@ router.post('/', async (req, res) => {
   const customer = await Customer.findById(req.body.customerId);
   if (!customer) return res.status(400).send('Invalid customer.');
 
-  const movie = await Movie.findById(req.body.movieId);
-  if (!movie) return res.status(400).send('Invalid movie.');
+  const car = await Car.findById(req.body.carId);
+  if (!car) return res.status(400).send('Invalid car.');
 
-  if (movie.numberInStock === 0) return res.status(400).send('Movie not in stock.');
+  if (car.numberAvailable === 0) return res.status(400).send('car not in stock.');
 
   let rental = new Rental({
     customer: {
@@ -34,23 +34,23 @@ router.post('/', async (req, res) => {
       name: customer.name,
       phone: customer.phone
     },
-    movie: {
-      _id: movie._id,
-      title: movie.title,
-      dailyRentalRate: movie.dailyRentalRate
+    car: {
+      _id: car._id,
+      title: car.title,
+      dailyRentalRate: car.dailyRentalRate
     }
   });
   // rental = await rental.save();
 
-  // movie.numberInStock--;
-  // movie.save();
+  // car.numberAvailable--;
+  // car.save();
 
   try {
     new Fawn.Task()
       .save('rentals', rental)
-      .update('movies', { _id: movie._id, }, {
+      .update('cars', { _id: car._id, }, {
         $inc: {
-          numberInStock: -1
+          numberAvailable: -1
         }
       })
       .run();
