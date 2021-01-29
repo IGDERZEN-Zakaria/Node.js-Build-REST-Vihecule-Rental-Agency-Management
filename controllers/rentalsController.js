@@ -1,5 +1,5 @@
 const { Rental, validate } = require('../models/rental');
-const { Car } = require('../models/car');
+const { Vehicle } = require('../models/vehicle');
 const { Customer } = require('../models/customer');
 const mongoose = require('mongoose');
 const Fawn = require('fawn');

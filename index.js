@@ -3,7 +3,7 @@ Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
 const typesRoutes = require('./routes/typesRoutes');
 const customersRoutes = require('./routes/customersRoutes');
-const carsRoutes = require('./routes/carsRoutes');
+const vehiclesRoutes = require('./routes/vehiclesRoutes');
 const rentalsRoutes = require('./routes/rentalsRoutes');
 const express = require('express');
 const app = express();
@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost/vidly', { useNewUrlParser: true, useUnifie
 app.use(express.json());
 app.use('/api/types', typesRoutes);
 app.use('/api/customers', customersRoutes);
-app.use('/api/cars', carsRoutes);
+app.use('/api/vehicles', vehiclesRoutes);
 app.use('/api/rentals', rentalsRoutes);
 
 

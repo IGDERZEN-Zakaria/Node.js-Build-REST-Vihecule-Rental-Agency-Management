@@ -2,7 +2,7 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 const { typeSchema } = require('./type');
 
-const carSchema = new mongoose.Schema({
+const vehicleSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -28,20 +28,20 @@ const carSchema = new mongoose.Schema({
   }
 });
 
-const Car = mongoose.model('Car', carSchema);
+const Vehicle = mongoose.model('Vehicle', vehicleSchema);
 
-function validateCar(car) {
+function validateVehicle(vehicleSchema) {
   const schema = {
     title: Joi.string().min(5).max(50).required(),
-    // carId: Joi.string().required(),
-    carId: Joi.objectId().required(),
+    // vehicleSchemaId: Joi.string().required(),
+    vehicleSchemaId: Joi.objectId().required(),
     numberAvailable: Joi.number().min(0).required(),
     dailyRentalRate: Joi.number().min(0).required()
   };
 
-  return Joi.validate(car, schema);
+  return Joi.validate(vehicleSchema, schema);
 }
 
-exports.carSchema = carSchema;
-exports.Car = Car;
-exports.validate = validateCar;
+exports.vehicleSchema = vehicleSchema;
+exports.VehicleSchema = Vehicle;
+exports.validate = validateVehicle;
