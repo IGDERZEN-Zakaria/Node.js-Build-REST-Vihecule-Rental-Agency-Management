@@ -11,6 +11,6 @@ const usersController = require('../controllers/usersController');
 
 
 router.get('/me', auth, usersController.user_get);
-router.post('/', usersController.user_create_post);
+router.post('/', auth, usersController.user_create_post);
 
 module.exports = router; 
