@@ -26,4 +26,21 @@ Try this request to get the header from the token
 == bodyRequest ==
 
 
+get the token fron the header response 
+
+x-auth-token =  tchiwiwi
+
+then use it to do the rest of requests :
+
+http://localhost:3000/api/vehicles
+http://localhost:3000/api/types
+http://localhost:3000/api/rentals
+http://localhost:3000/api/customers
+
+
+
+
+
+
+
 
