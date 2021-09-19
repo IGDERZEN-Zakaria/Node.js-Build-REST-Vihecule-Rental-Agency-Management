@@ -7,7 +7,7 @@ const Vehicle = mongoose.model('Vehicles', new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    minlength: 5,
+    minlength: 3,
     maxlength: 255
   },
   type: {
@@ -30,7 +30,7 @@ const Vehicle = mongoose.model('Vehicles', new mongoose.Schema({
 
 function validateVehicle(vehicle) {
   const schema = {
-    title: Joi.string().min(5).max(50).required(),
+    title: Joi.string().min(3).max(50).required(),
     // typeId: Joi.string().required(),
     typeId: Joi.objectId().required(),
     numberAvailable: Joi.number().min(0).required(),
