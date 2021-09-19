@@ -3,7 +3,7 @@ const { Type, validate } = require('../models/type');
 
 const type_index = async (req, res, next) => {
 
-  throw new Error('Could not get the genres.');
+  //throw new Error('Could not get the genres.');
   const types = await Type.find().sort('name');
   res.send(types);
 
