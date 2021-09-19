@@ -8,5 +8,5 @@ to set jwtPrivateKey :
 
 export vidly_jwtPrivateKey=mySecureKey 
 
-
+node index.js  
 
