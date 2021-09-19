@@ -10,3 +10,12 @@ to set jwtPrivateKey :
 
 # node index.js  
 
+
+http://localhost:3000/api/users
+
+{
+  "_id": "614789436fd7b5130b94b7d5",
+  "name": "Zacko",
+  "email": "zakaria.igderzen@gmail.com"
+}
+
