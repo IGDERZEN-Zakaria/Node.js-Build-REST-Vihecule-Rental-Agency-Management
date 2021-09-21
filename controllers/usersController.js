@@ -8,12 +8,12 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
-const user_get = async (req, res) => {
+export const getUser = async (req, res) => {
   const user = await User.findById(req.user._id).select('-password');
   res.send(user);
 };
 
-const user_create_post = async (req, res) => {
+export const createUser = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -29,7 +29,3 @@ const user_create_post = async (req, res) => {
   res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
 };
 
-module.exports = {
-  user_create_post,
-  user_get
-};

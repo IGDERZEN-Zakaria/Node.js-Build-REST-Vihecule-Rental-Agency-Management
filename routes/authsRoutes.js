@@ -1,9 +1,12 @@
 const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
-const authsController = require('../controllers/authsController');
 
-router.post('/', authsController.auth_create_post);
+import {
+    createAuth,
+  } from '../controllers/authsController'
+
+router.post('/', createAuth);
 
 
-module.exports = router; 
+module.exports = router;

@@ -2,15 +2,24 @@ const { Type, validate } = require('../models/type');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-const typesController = require('../controllers/typesController');
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
 //const asyncMiddleware = require("../middleware/async");
 
-router.get('/', typesController.type_index);
-router.post('/', auth, typesController.type_create_post);
-router.put('/:id', auth, typesController.type_update_put);
-router.delete('/:id', [auth, admin], typesController.type_delete);
-router.get('/:id', auth, typesController.type_get);
+import {
+    queryType,
+    createType,
+    setType,
+    deleteType,
+    getType
+  } from '../controllers/typesController'
+
+
+
+router.get('/',auth,  queryType);
+router.post('/', auth, createType);
+router.put('/:id', auth, setType);
+router.delete('/:id', [auth, admin], deleteType);
+router.get('/:id', auth, getType);
 
 module.exports = router;

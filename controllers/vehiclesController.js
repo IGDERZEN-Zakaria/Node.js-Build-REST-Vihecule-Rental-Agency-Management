@@ -1,12 +1,12 @@
 const { Vehicle, validate } = require('../models/vehicle');
 const { Type } = require('../models/type');
 
-const vehicle_index = async (req, res) => {
+export const queryVehicle = async (req, res) => {
   const vehicles = await Vehicle.find().sort('name');
   res.send(vehicles);
 };
 
-const vehicle_create_post = async (req, res) => {
+export const createVehicle = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -27,7 +27,7 @@ const vehicle_create_post = async (req, res) => {
   res.send(vehicle);
 };
 
-const vehicle_update_put = async (req, res) => {
+export const setVehicle = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -50,7 +50,7 @@ const vehicle_update_put = async (req, res) => {
   res.send(vehicle);
 };
 
-const vehicle_delete = async (req, res) => {
+export const deleteVehicle = async (req, res) => {
   const vehicle = await Vehicle.findByIdAndRemove(req.params.id);
 
   if (!vehicle) return res.status(404).send('The vehicle with the given ID was not found.');
@@ -58,18 +58,10 @@ const vehicle_delete = async (req, res) => {
   res.send(vehicle);
 };
 
-const vehicle_get = async (req, res) => {
+export const getVehicle = async (req, res) => {
   const vehicle = await Vehicle.findById(req.params.id);
 
   if (!vehicle) return res.status(404).send('The vehicle with the given ID was not found.');
 
   res.send(vehicle);
-};
-
-module.exports = {
-  vehicle_index,
-  vehicle_create_post,
-  vehicle_update_put,
-  vehicle_delete,
-  vehicle_get
 };

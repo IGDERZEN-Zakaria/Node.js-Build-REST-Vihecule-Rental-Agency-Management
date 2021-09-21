@@ -7,6 +7,25 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js --exec   babel-node"
   },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-optional-chaining",
+      "@babel/plugin-syntax-dynamic-import",
+      "@babel/plugin-syntax-import-meta",
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-json-strings"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -27,6 +46,15 @@
     "winston-mongodb": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/node": "^7.15.4"
+    "@babel/node": "^7.15.4",
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-json-strings": "^7.2.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.6.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-syntax-import-meta": "^7.2.0",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2"
   }
 }

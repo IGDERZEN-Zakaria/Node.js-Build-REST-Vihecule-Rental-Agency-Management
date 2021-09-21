@@ -1,7 +1,7 @@
 const { Type, validate } = require('../models/type');
 
 
-const type_index = async (req, res, next) => {
+export const queryType = async (req, res, next) => {
 
   //throw new Error('Could not get the genres.');
   const types = await Type.find().sort('name');
@@ -9,7 +9,7 @@ const type_index = async (req, res, next) => {
 
 };
 
-const type_create_post = async (req, res) => {
+export const createType = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -19,7 +19,7 @@ const type_create_post = async (req, res) => {
   res.send(type);
 };
 
-const type_update_put = async (req, res) => {
+export const setType = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -32,7 +32,7 @@ const type_update_put = async (req, res) => {
   res.send(type);
 };
 
-const type_delete = async (req, res) => {
+export const deleteType = async (req, res) => {
   const type = await Type.findByIdAndRemove(req.params.id);
 
   if (!type) return res.status(404).send('The type with the given ID was not found.');
@@ -40,7 +40,7 @@ const type_delete = async (req, res) => {
   res.send(type);
 };
 
-const type_get = async (req, res) => {
+export const getType = async (req, res) => {
   const type = await Type.findById(req.params.id);
 
   if (!type) return res.status(404).send('The type with the given ID was not found.');
@@ -49,10 +49,3 @@ const type_get = async (req, res) => {
 };
 
 
-module.exports = {
-  type_index,
-  type_create_post,
-  type_update_put,
-  type_delete,
-  type_get
-};

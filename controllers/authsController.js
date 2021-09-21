@@ -6,7 +6,7 @@ const { User } = require('../models/user');
 const express = require('express');
 //const jwt = require('jsonwebtoken');
 
-const auth_create_post = async (req, res) => {
+export const createAuth = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -31,7 +31,3 @@ function validate(req) {
   return Joi.validate(req, schema);
 }
 
-
-module.exports = {
-  auth_create_post
-};

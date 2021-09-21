@@ -7,12 +7,12 @@ const express = require('express');
 
 Fawn.init(mongoose);
 
-const rental_index = async (req, res) => {
+export const queryRental = async (req, res) => {
   const rentals = await Rental.find().sort('-dateOut');
   res.send(rentals);
 };
 
-const rental_create_post = async (req, res) => {
+export const createRental = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -63,7 +63,7 @@ const rental_create_post = async (req, res) => {
 
 };
 
-const rental_get = async (req, res) => {
+export const getRental = async (req, res) => {
   const rental = await Rental.findById(req.params.id);
 
   if (!rental) return res.status(404).send('The rental with the given ID was not found.');
@@ -71,8 +71,3 @@ const rental_get = async (req, res) => {
   res.send(rental);
 };
 
-module.exports = {
-  rental_index,
-  rental_create_post,
-  rental_get
-};
