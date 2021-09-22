@@ -33,6 +33,7 @@
     "@babel/core": "^7.15.5",
     "bcrypt": "^5.0.0",
     "config": "^3.3.3",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "fawn": "^2.1.5",
